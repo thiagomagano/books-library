@@ -7,8 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth'])->group(function () { });
+Route::middleware(['auth.basic'])->group(function () { 
+    Route::resource('books', BookController::class);
+    Route::get('/search-books', [BookController::class, 'search'])->name('books.search');
+    Route::get('/dashboard', [BookController::class, 'dashboard'])->name('dashboard');
+});
 
-Route::resource('books', BookController::class);
-Route::get('/search-books', [BookController::class, 'search'])->name('books.search');
-Route::get('/dashboard', [BookController::class, 'dashboard'])->name('dashboard');
+
